@@ -14,7 +14,6 @@ Flask-GraphQL = "^2.0.1"
 graphene = "2.1.7"
 mongoengine = "^0.24.0"
 graphene-mongo = "0.1.17"
-mongoengine-migrate = "^0.0.2"
 
 [tool.poetry.dev-dependencies]
 
