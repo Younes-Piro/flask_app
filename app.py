@@ -1,35 +1,16 @@
 from flask import Flask, Response, request
-from dotenv import load_dotenv
 import json
-import pymongo
-import os
 from bson.objectid import ObjectId
+from Models import User
+from connection import db
 
-load_dotenv()
 app = Flask(__name__)
-
-
-conn_string = {os.getenv("CONNECTION_STRING")}
-
-# set a 5-second connection timeout
-client = pymongo.MongoClient(
-    conn_string,
-    serverSelectionTimeoutMS=5000
-)
-try:
-    db = client.company
-    print(client.server_info())
-except Exception:
-    print("Cannot connect to DB.")
-
 
 @app.route('/users', methods=['POST'])
 def create_user():
     try:
-        user = {
-            "name": request.form["name"],
-            "lastname": request.form["lastname"]
-        }
+        users = User.User(request.form["name"],request.form["lastname"])
+        user = users.create_user()
         dbResponse = db.users.insert_one(user)
 
         #for attr in dir(dbResponse):
